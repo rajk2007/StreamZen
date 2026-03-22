@@ -160,7 +160,7 @@ android {
         }
     }
 
-    namespace = "com.raj.streamzen"
+    namespace = "com.lagradost.cloudstream3"
 }
 
 dependencies {
