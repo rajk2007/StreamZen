@@ -102,7 +102,7 @@ android {
         }
         debug {
             isDebuggable = true
-            applicationIdSuffix = ".debug"
+            applicationIdSuffix = ""
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -160,7 +160,7 @@ android {
         }
     }
 
-    namespace = "com.lagradost.cloudstream3"
+    namespace = "com.raj.streamzen"
 }
 
 dependencies {
