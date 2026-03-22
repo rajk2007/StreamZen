@@ -103,6 +103,7 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ""
+            resValue("string", "app_name", "StreamZen")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
