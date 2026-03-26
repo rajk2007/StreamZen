@@ -13,7 +13,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
-        maven("https://jitpack.io")
+        maven {
+            url = uri("https://jitpack.io")
+            credentials {
+                username = System.getenv("JITPACK_TOKEN") ?: ""
+            }
+        }
     }
 }
 
