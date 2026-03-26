@@ -199,6 +199,7 @@ object Torrent {
 
     /** Spins up the torrent server. */
     private suspend fun setup(dir: String): Boolean {
+        /*
         // go.Seq.load()
         if (echo()) {
             return true
@@ -211,6 +212,8 @@ object Torrent {
         TORRENT_SERVER_URL = "http://127.0.0.1:$port"
         // TorrServer.addTrackers(trackers.joinToString(separator = ",\n"))
         return echo()
+        */
+        return false
     }
 
     /** Transforms a torrent link into a streamable link via the server */
