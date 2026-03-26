@@ -19,7 +19,9 @@ import com.google.android.gms.cast.TextTrackStyle.EDGE_TYPE_DROP_SHADOW
 import com.google.android.gms.cast.TextTrackStyle.EDGE_TYPE_NONE
 import com.google.android.gms.cast.TextTrackStyle.EDGE_TYPE_OUTLINE
 import com.google.android.gms.cast.TextTrackStyle.EDGE_TYPE_RAISED
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import com.skydoves.colorpickerview.ColorEnvelope
 import com.rajk2007.novacast.NovaCastApp.Companion.getKey
 import com.rajk2007.novacast.CommonActivity.onColorSelectedEvent
 import com.rajk2007.novacast.CommonActivity.onDialogDismissedEvent
@@ -178,11 +180,16 @@ class ChromecastSubtitlesFragment : BaseFragment<ChromecastSubtitleSettingsBindi
             setFocusableInTv()
             this.setOnClickListener {
                 activity?.let {
-                    ColorPickerDialog.newBuilder()
-                        .setDialogId(id)
-                        .setShowAlphaSlider(true)
-                        .setColor(getColor(id))
-                        .show(it)
+                    ColorPickerDialog.Builder(it)
+                        .setTitle(getString(R.string.subtitles_settings))
+                        .setPositiveButton(getString(R.string.apply), object : ColorEnvelopeListener {
+                            override fun onColorSelected(envelope: ColorEnvelope, fromUser: Boolean) {
+                                onColorSelectedEvent.invoke(Pair(id, envelope.color))
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), null)
+                        .attachAlphaSlideBar(true)
+                        .show()
                 }
             }
 

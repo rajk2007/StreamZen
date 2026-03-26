@@ -26,7 +26,9 @@ import androidx.media3.ui.CaptionStyleCompat
 import androidx.media3.ui.SubtitleView
 import androidx.preference.PreferenceManager
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import com.skydoves.colorpickerview.ColorEnvelope
 import com.rajk2007.novacast.NovaCastApp.Companion.getKey
 import com.rajk2007.novacast.NovaCastApp.Companion.setKey
 import com.rajk2007.novacast.CommonActivity.onColorSelectedEvent
@@ -402,11 +404,16 @@ class SubtitlesFragment : BaseDialogFragment<SubtitleSettingsBinding>(
 
             this.setOnClickListener {
                 activity?.let {
-                    ColorPickerDialog.newBuilder()
-                        .setDialogId(id)
-                        .setShowAlphaSlider(true)
-                        .setColor(getColor(id))
-                        .show(it)
+                    ColorPickerDialog.Builder(it)
+                        .setTitle(getString(R.string.subtitles_settings))
+                        .setPositiveButton(getString(R.string.apply), object : ColorEnvelopeListener {
+                            override fun onColorSelected(envelope: ColorEnvelope, fromUser: Boolean) {
+                                onColorSelectedEvent.invoke(Pair(id, envelope.color))
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), null)
+                        .attachAlphaSlideBar(true)
+                        .show()
                 }
             }
 

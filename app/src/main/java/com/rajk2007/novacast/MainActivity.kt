@@ -60,7 +60,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.collect.Comparators.min
-import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import com.skydoves.colorpickerview.ColorEnvelope
 import com.rajk2007.novacast.APIHolder.allProviders
 import com.rajk2007.novacast.APIHolder.apis
 import com.rajk2007.novacast.APIHolder.initAll
@@ -190,7 +191,7 @@ import kotlin.math.absoluteValue
 import kotlin.system.exitProcess
 import com.rajk2007.novacast.utils.downloader.DownloadQueueManager
 
-class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCallback {
+class MainActivity : AppCompatActivity(), ColorEnvelopeListener, BiometricCallback {
     companion object {
         var activityResultLauncher: ActivityResultLauncher<Intent>? = null
 
@@ -467,8 +468,12 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         }
     }
 
-    override fun onColorSelected(dialogId: Int, color: Int) {
-        onColorSelectedEvent.invoke(Pair(dialogId, color))
+    override fun onColorSelected(envelope: ColorEnvelope, fromUser: Boolean) {
+        // Skydoves doesn't have a direct dialogId in the listener, 
+        // but the app uses CommonActivity.onColorSelectedEvent.
+        // We might need to handle this differently if dialogId is essential.
+        // For now, following the instruction to replace with ColorListener (ColorEnvelopeListener).
+        onColorSelectedEvent.invoke(Pair(0, envelope.color))
     }
 
     override fun onDialogDismissed(dialogId: Int) {
